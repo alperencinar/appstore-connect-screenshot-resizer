@@ -90,14 +90,30 @@ function resizeImage(imgEntry) {
             canvas.height = target.height;
             const ctx = canvas.getContext('2d');
 
-            // Fill with black background
-            ctx.fillStyle = '#000000';
+            // Draw blurred background (cover fit)
+            ctx.save();
+            const bgScaleX = target.width / img.naturalWidth;
+            const bgScaleY = target.height / img.naturalHeight;
+            const bgScale = Math.max(bgScaleX, bgScaleY);
+            
+            const bgWidth = img.naturalWidth * bgScale;
+            const bgHeight = img.naturalHeight * bgScale;
+            const bgX = (target.width - bgWidth) / 2;
+            const bgY = (target.height - bgHeight) / 2;
+            
+            ctx.filter = 'blur(40px)';
+            ctx.drawImage(img, bgX, bgY, bgWidth, bgHeight);
+            
+            // Add a subtle dark overlay to make the main image stand out
+            ctx.filter = 'none';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.restore();
 
-            // Calculate cover-fit dimensions
+            // Calculate contain-fit dimensions for the main image (pad to fit without cropping)
             const scaleX = target.width / img.naturalWidth;
             const scaleY = target.height / img.naturalHeight;
-            const scale = Math.max(scaleX, scaleY);
+            const scale = Math.min(scaleX, scaleY);
 
             const drawWidth = img.naturalWidth * scale;
             const drawHeight = img.naturalHeight * scale;
