@@ -1,0 +1,9 @@
+{
+  "name": "app-store-screenshot-resizer",
+  "version": "1.0.0",
+  "description": "Simple tool to resize images to App Store screenshot dimensions for iPhone and iPad",
+  "license": "MIT",
+  "scripts": {
+    "serve": "python3 -m http.server 8000"
+  }
+}
