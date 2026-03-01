@@ -127,7 +127,7 @@ function resizeImage(imgEntry) {
                 imgEntry.resizedBlob = blob;
                 imgEntry.resizedUrl = URL.createObjectURL(blob);
                 resolve();
-            }, 'image/png');
+            }, 'image/jpeg', 1.0);
         };
         img.src = imgEntry.originalUrl;
     });
@@ -244,7 +244,7 @@ function getResizedName(originalName) {
     const target = SIZES[currentDevice];
     const ext = originalName.lastIndexOf('.');
     const base = ext !== -1 ? originalName.substring(0, ext) : originalName;
-    return `${base}_${target.width}x${target.height}.png`;
+    return `${base}_${target.width}x${target.height}.jpg`;
 }
 
 function downloadBlob(blob, filename) {
